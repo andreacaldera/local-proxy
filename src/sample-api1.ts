@@ -1,12 +1,14 @@
+import { json } from 'body-parser'
 import express from 'express'
+import { sampleHandler } from './sample-handler'
 
 const app = express()
 
 const PORT = 8081
 
-app.use((req, res) => {
-  res.send(`Response from v1 on port ${PORT} using URL ${req.originalUrl}`)
-})
+app.use(json())
+
+app.use(sampleHandler('v1', PORT))
 
 export const startApp = async (): Promise<void> => {
   return new Promise((resolve, reject) => {
